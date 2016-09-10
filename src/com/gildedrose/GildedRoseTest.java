@@ -60,7 +60,7 @@ public class GildedRoseTest {
         GildedRose inDateApp = new GildedRose(inDateItems);
         inDateApp.updateQuality();
         assertEquals(80, inDateApp.items[0].quality);
-        assertEquals(0, inDateApp.items[0].sellIn);
+        assertEquals(1, inDateApp.items[0].sellIn);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class GildedRoseTest {
     @Test
     public void backStagePassesGetResetToZeroAfterSellInDate() {
 
-        Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 1, 20)};
+        Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 0, 20)};
         GildedRose app = new GildedRose(items);
 
         app.updateQuality();
