@@ -1,73 +1,48 @@
 package com.gildedrose;
 
+import com.gildedrose.Items.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by arjun on 09/09/2016.
  */
 class GildedRose {
-    public static final String AGED_BRIE = "Aged Brie";
-    public static final String SULFURAS_HAND_OF_RAGNAROS = "Sulfuras, Hand of Ragnaros";
-    public static final String BACKSTAGE_PASSES_TO_A_TAFKAL80_ETC_CONCERT = "Backstage passes to a TAFKAL80ETC concert";
 
-    Item[] items;
+    List<Item> items;
 
     public GildedRose(Item[] items) {
-        this.items = items;
+
+         this.items = Arrays.asList(items);
     }
 
     public void updateQuality() {
+
+        ArrayList modifiedList = new ArrayList();
+
         for (Item item : items) {
-            if (!item.name.equals(AGED_BRIE)
-                    && !item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80_ETC_CONCERT)) {
-                if (item.quality > 0) {
-                    if (!item.name.equals(SULFURAS_HAND_OF_RAGNAROS)) {
 
-                        if (item.name.contains("Conjured")) {
+            BaseItem revisedItem = new NormalItem(item);
+            if (AgedBrie.equalTo(item)) {
 
-                            item.quality = item.quality - 2;
-                        } else {
+                revisedItem = new AgedBrie(item);
+            } else if (BackstagePass.equalTo(item)) {
 
-                            item.quality = item.quality - 1;
-                        }
-                    }
-                }
-            } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
+                revisedItem = new BackstagePass(item);
+            } else if (Sulfuras.equalTo(item)) {
 
-                    if (item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80_ETC_CONCERT)) {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
+                revisedItem = new Sulfuras(item);
+            } else if (Conjured.equalTo(item)) {
 
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
-                    }
-                }
+                revisedItem = new Conjured(item);
             }
 
-            if (!item.name.equals(SULFURAS_HAND_OF_RAGNAROS)) {
-                item.sellIn = item.sellIn - 1;
-            }
-
-            if (item.sellIn < 0) {
-                if (!item.name.equals(AGED_BRIE)) {
-                    if (!item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80_ETC_CONCERT)) {
-                        if (item.quality > 0) {
-                            if (!item.name.equals(SULFURAS_HAND_OF_RAGNAROS)) {
-                                item.quality = item.quality - 1;
-                            }
-                        }
-                    } else {
-                        item.quality = 0;
-                    }
-
-                }
-            }
+            revisedItem.modify();
+            modifiedList.add(revisedItem);
         }
+
+        items = modifiedList;
     }
 }
