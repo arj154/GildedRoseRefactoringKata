@@ -11,38 +11,35 @@ import java.util.List;
  */
 class GildedRose {
 
-    List<Item> items;
+    Item[] items;
 
     public GildedRose(Item[] items) {
 
-         this.items = Arrays.asList(items);
+         this.items = items;
     }
 
     public void updateQuality() {
 
-        ArrayList modifiedList = new ArrayList();
 
-        for (Item item : items) {
+        for (int i = 0; i < items.length; i++) {
 
-            BaseItem revisedItem = new NormalItem(item);
-            if (AgedBrie.equalTo(item)) {
+            BaseItem revisedItem = new NormalItem(items[i]);
+            if (AgedBrie.equalTo(items[i])) {
 
-                revisedItem = new AgedBrie(item);
-            } else if (BackstagePass.equalTo(item)) {
+                revisedItem = new AgedBrie(items[i]);
+            } else if (BackstagePass.equalTo(items[i])) {
 
-                revisedItem = new BackstagePass(item);
-            } else if (Sulfuras.equalTo(item)) {
+                revisedItem = new BackstagePass(items[i]);
+            } else if (Sulfuras.equalTo(items[i])) {
 
-                revisedItem = new Sulfuras(item);
-            } else if (Conjured.equalTo(item)) {
+                revisedItem = new Sulfuras(items[i]);
+            } else if (Conjured.equalTo(items[i])) {
 
-                revisedItem = new Conjured(item);
+                revisedItem = new Conjured(items[i]);
             }
 
             revisedItem.modify();
-            modifiedList.add(revisedItem);
+            items[i] = revisedItem;
         }
-
-        items = modifiedList;
     }
 }

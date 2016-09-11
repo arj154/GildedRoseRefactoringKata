@@ -69,9 +69,15 @@ public abstract class BaseItem extends Item {
 
     public void setQuality(int quality) {
 
-        if (quality >= 0 && quality <= 50 ) {
+        if (quality >= 0 && quality <= 50) {
 
             this.quality = quality;
+        } else if (quality > 50) {
+
+            this.quality = 50;
+        } else if (quality < 0)
+        {
+            this.quality = 0;
         }
     }
 }
